@@ -34,21 +34,29 @@ function MapView() {
   const setNow = () => setSelectedTime(new Date())
   const add15 = () => setSelectedTime((prev) => new Date(prev.getTime() + 15 * 60 * 1000))
 
-  const activeVenueIds = new Set()
-  for (const p of performances) {
-    const start = new Date(p.start)
-    const end = new Date(p.end)
-    if (start <= selectedTime && end > selectedTime) {
-      activeVenueIds.add(p.venueId)
-    }
+  const toMinutes = (dateStr) => {
+    const d = new Date(dateStr)
+    return d.getHours() * 60 + d.getMinutes()
   }
 
+  const selectedMinutes = selectedTime.getHours() * 60 + selectedTime.getMinutes()
+
+  const activeVenueIds = new Set(
+    performances
+      .filter(p => {
+        const start = toMinutes(p.start)
+        const end = toMinutes(p.end)
+        return start <= selectedMinutes && selectedMinutes < end
+      })
+      .map(p => p.venueId)
+  )
+
   const activeInVenue = selectedVenueId
-    ? performances.filter(p => p.venueId === selectedVenueId && new Date(p.start) <= selectedTime && new Date(p.end) > selectedTime)
+    ? performances.filter(p => p.venueId === selectedVenueId && toMinutes(p.start) <= selectedMinutes && toMinutes(p.end) > selectedMinutes)
     : []
 
   const nextInVenue = selectedVenueId
-    ? performances.filter(p => p.venueId === selectedVenueId && new Date(p.start) > selectedTime).sort((a, b) => new Date(a.start) - new Date(b.start))[0]
+    ? performances.filter(p => p.venueId === selectedVenueId && toMinutes(p.start) > selectedMinutes).sort((a, b) => toMinutes(a.start) - toMinutes(b.start))[0]
     : null
 
   const venue = selectedVenueId ? venueMap[selectedVenueId] : null
@@ -59,6 +67,7 @@ function MapView() {
         <span className="map-time">{fmtTime(selectedTime)}</span>
         <button onClick={setNow}>{t('now')}</button>
         <button onClick={add15}>{t('plus15')}</button>
+        <button onClick={() => { const d = new Date(); d.setHours(15,0,0,0); setSelectedTime(d) }}>▶ 15:00</button>
       </div>
       <div className="map-container" style={{ position: 'relative' }}>
         <img src="/map.png" className="map-img" style={{ width: '100%', display: 'block' }} alt="Map" />

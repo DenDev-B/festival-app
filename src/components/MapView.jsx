@@ -13,6 +13,7 @@ const VENUE_DOTS = [
   { id: 'busking-park',   label: '8', top: '30%', left: '88%' },
 ]
 
+
 function fmtTime(d) {
   const hh = String(d.getHours()).padStart(2, '0')
   const mm = String(d.getMinutes()).padStart(2, '0')

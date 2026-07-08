@@ -7,10 +7,11 @@ const VENUE_DOTS = [
   { id: 'scena-kruhac',   label: '2', top: '61%', left: '73%' },
   { id: 'busking-alsak',  label: '3', top: '62%', left: '12%' },
   { id: 'busking-dvore',  label: '4', top: '24%', left: '17%' },
-  { id: 'busking-hlavni', label: '5', top: '24%', left: '41%' },
-  { id: 'pruvod-hlavni',  label: '6', top: '60%', left: '48%' },
-  { id: 'busking-dukla',  label: '7', top: '42%', left: '67%' },
-  { id: 'busking-park',   label: '8', top: '30%', left: '88%' },
+  { id: 'busking-hlavni5', label: '5', top: '12%', left: '46%' },
+  { id: 'busking-hlavni6', label: '6', top: '62%', left: '51%' },
+  { id: 'pruvod',          label: '7', top: '60%', left: '48%' },
+  { id: 'busking-dukla',  label: '8', top: '42%', left: '67%' },
+  { id: 'busking-park',   label: '9', top: '30%', left: '88%' },
 ]
 
 
